@@ -31,3 +31,4 @@ jobs:
           azcliversion: 2.30.0
           inlineScript: |            
             az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .
+# Create new branch
