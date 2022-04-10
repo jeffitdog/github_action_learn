@@ -30,7 +30,7 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az storage blob delete-batch --account-name storageaccount12111122 --account-key ${{ secrets.AZURE_SECRET_KEY }} -s '$web'      
+            az storage blob delete-batch --account-name storageaccount12111122 -s '$web'      
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
