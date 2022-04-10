@@ -28,13 +28,11 @@ jobs:
       - name: Purge files in container
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.30.0
           inlineScript: |
             az storage blob delete-batch --account-name storageaccount12111122 --auth-mode key -s '$web'      
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.30.0
           inlineScript: |
             sleep 5; cd             
             az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s ./build
