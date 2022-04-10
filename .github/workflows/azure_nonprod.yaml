@@ -35,4 +35,4 @@ jobs:
         with:
           inlineScript: |
             sleep 5; cd             
-            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode login -d '$web' -s ./build
+            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s ./build
