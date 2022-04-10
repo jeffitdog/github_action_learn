@@ -49,4 +49,4 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |        
-            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s ./${{github.sha}}.zip
+            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s ./build
