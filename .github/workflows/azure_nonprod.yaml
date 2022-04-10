@@ -13,10 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Configure Azure login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_SECRET_KEY }}
+
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
@@ -25,13 +22,31 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifacts@v2
+        with:
+          name: zipped-bundle
+          path: $ {{ github.sha }}.zip
  #     - name: Purge files in container
  #       uses: azure/CLI@v1
  #       with:
  #         inlineScript: |
- #           az storage blob delete-batch --account-name storageaccount12111122 --auth-mode key -s '$web'      
+ #           az storage blob delete-batch --account-name storageaccount12111122 --auth-mode key -s '$web' 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifacts@v2
+        with:
+          name: zipped-bundle
+      - name: Configure Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SECRET_KEY }}
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
+          azcliversion: 2.0.72
           inlineScript: |        
-            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .
+            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s ./${{github.sha}}.zip
