@@ -23,7 +23,7 @@ jobs:
           npm ci
           npm run build
       - name: Upload build artifacts
-        uses: actions/upload-artifacts@v2
+        uses: actions/upload-artifact@v2
         with:
           name: zipped-bundle
           path: $ {{ github.sha }}.zip
