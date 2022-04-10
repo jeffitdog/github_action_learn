@@ -3,7 +3,8 @@ name: Deploy feature branches to nonproduction
 on:
   push:
     branches:
-      - feature*
+     # - feature*
+     - main
 
 jobs:
   build:

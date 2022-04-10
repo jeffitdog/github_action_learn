@@ -1,0 +1,33 @@
+name: Deploy feature branches to nonproduction
+
+on:
+  push:
+    branches:
+      - feature*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    #env:
+     # BUCKET_NAME: <Nonproduction bucket name here>
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SECRET_KEY }}
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |            
+            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .
