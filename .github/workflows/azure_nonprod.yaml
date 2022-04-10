@@ -22,11 +22,6 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: zipped-bundle
-          path: ./build
  #     - name: Purge files in container
  #       uses: azure/CLI@v1
  #       with:
@@ -39,6 +34,5 @@ jobs:
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.0.72
           inlineScript: |        
             az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .
