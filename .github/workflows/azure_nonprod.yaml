@@ -34,5 +34,6 @@ jobs:
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
+   #   az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .        
           inlineScript: |        
-            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .
+            az storage container create --name "testcontainer"
