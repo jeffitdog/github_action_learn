@@ -33,7 +33,7 @@ jobs:
           creds: ${{ secrets.AZURE_SECRET_KEY }}
       - name: Upload to blob storage
         uses: azure/CLI@v1
-        with:
-   #   az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s .        
+        # az storage container create --name testcontainer --account-name storageaccount12111122 --auth-mode key
+        with:          
           inlineScript: |        
-            az storage container create --name testcontainer --account-name storageaccount12111122 --auth-mode key
+            az storage blob upload-batch --account-name storageaccount12111122 --auth-mode key -d '$web' -s . 
